@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cupó d'aniversari — Cap de setmana sorpresa</title>
+  <meta name="description" content="Cupó vàlid per un cap de setmana sorpresa a Àger.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <header class="hero">
+      <div class="hero-badge">🎁 Cupó d'aniversari</div>
+      <h1>Cap de setmana sorpresa</h1>
+      <p class="subtitle">Vàlid per un cap de setmana sorpresa — desconnectar, gaudir i molts petonets ✨</p>
+      <div class="hearts" aria-hidden="true">
+        <span>❤</span><span>❤</span><span>❤</span>
+      </div>
+    </header>
+
+    <section id="voucher-view" class="view">
+      <div class="voucher">
+        <p>Presentant aquest cupó, la persona afortunada podrà gaudir d'un <strong>cap de setmana sorpresa</strong>, amb moments especials i una mica de màgia.</p>
+        <ul class="details">
+          <li>Vàlid per a: <span id="voucher-to">La meva persona preferida</span></li>
+          <li>Codi: <code id="voucher-code">CUPO-2025-23</code></li>
+          <li>Condicions: no transferible, val només per la data acordada.</li>
+        </ul>
+      </div>
+      <div class="actions">
+        <button id="redeemBtn" class="btn btn-primary">Canvia el cupó</button>
+        <button id="printBtn" class="btn btn-ghost">Imprimeix</button>
+      </div>
+    </section>
+
+    <section id="redeemed-view" class="view hidden">
+      <div class="redeemed">
+        <h2>🎉 Cupó canjeat!</h2>
+        <p>❤️ Moltes felicitats petita, espero que t'agradi el finde ❤️</p>
+        <p class="note">*Si necessites els detalls, revisa el missatge de confirmació 😉</p>
+        <button id="confettiBtn" class="btn btn-primary">Llança confetti</button>
+        <button id="backBtn" class="btn btn-ghost">Torna al cupó</button>
+      </div>
+      <canvas id="confettiCanvas"></canvas>
+    </section>
+
+    <footer class="footer">
+      <small>Fet amb ❤️</small>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
