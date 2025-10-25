@@ -1,62 +1,367 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cupó d'aniversari — Cap de setmana sorpresa</title>
-  <meta name="description" content="Cupó vàlid per un cap de setmana sorpresa a Àger.">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cupó Romàntic — Cap de setmana a Àger</title>
+  <meta name="description" content="Cupó romàntic per un cap de setmana sorpresa a Àger.">
+  <style>
+    :root{
+      --bg1:#1b1734; /* nit violeta */
+      --bg2:#2c2147;
+      --accent:#f0caca; /* rosa suau */
+      --accent-2:#ffd7a8; /* to melocotó */
+      --ink:#fff7f3;
+      --card:#2a2342;
+      --muted:#cdbdc1;
+      --ok:#5dd39e;
+      --warn:#ff9f9f;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--ink);
+      background: radial-gradient(1200px 800px at 70% -10%, #3b2b70 0%, var(--bg1) 45%, var(--bg2) 100%);
+      overflow-x:hidden;
+    }
+    /* estrelles de fons */
+    .stars, .twinkles{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-repeat:repeat;
+      opacity:.5;
+    }
+    .stars{
+      background-image: radial-gradient(1px 1px at 20px 30px, #ffffffcc 1px, transparent 1px),
+                        radial-gradient(1px 1px at 140px 80px, #ffffffb3 1px, transparent 1px),
+                        radial-gradient(1px 1px at 90px 120px, #ffffff66 1px, transparent 1px),
+                        radial-gradient(1px 1px at 200px 40px, #fff 1px, transparent 1px);
+      background-size: 200px 200px;
+      animation: drift 60s linear infinite;
+    }
+    .twinkles{
+      background-image: radial-gradient(2px 2px at 60px 60px, #fff 2px, transparent 2px),
+                        radial-gradient(2px 2px at 180px 140px, #fff8 2px, transparent 2px);
+      background-size: 240px 240px;
+      animation: drift 100s linear infinite reverse;
+      opacity:.35;
+    }
+    @keyframes drift { from{background-position:0 0} to{background-position:2000px 0} }
+
+    header{
+      position:relative; z-index:1; padding:48px 20px 16px;
+      text-align:center;
+    }
+    .title{
+      font-size: clamp(26px, 4vw, 42px);
+      line-height:1.1;
+      margin:0;
+      letter-spacing:.3px;
+      color:var(--accent);
+      text-shadow: 0 2px 14px rgba(255,255,255,.15);
+    }
+    .subtitle{
+      margin:10px auto 0;
+      color:var(--muted);
+      max-width:780px;
+    }
+
+    .wrap{
+      position:relative; z-index:1;
+      display:flex; align-items:center; justify-content:center;
+      padding: 24px 16px 80px;
+    }
+    .card{
+      width:min(920px, 94vw);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02)), var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      padding: 28px;
+      backdrop-filter: blur(6px);
+    }
+    .badge{
+      display:inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color:#341c2b;
+      font-weight:700; letter-spacing:.25px;
+      padding:6px 12px; border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    h2{
+      margin: 8px 0 10px; font-size: clamp(22px,3.2vw,30px);
+      color: #ffece4;
+    }
+    .meta{
+      display:flex; flex-wrap:wrap; gap:10px 18px; margin:10px 0 18px; color:#f5e8e1cc;
+      font-size:14px;
+    }
+    .meta span{opacity:.85}
+    .voucher{
+      background: rgba(255,255,255,.03);
+      border: 1px dashed rgba(255,255,255,.2);
+      border-radius: 16px;
+      padding: 16px;
+      line-height:1.6;
+      color:#fff3ee;
+    }
+    .voucher strong{color:#ffe1d6}
+    .code{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border-radius:10px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      margin-top:10px;
+    }
+    .actions{
+      display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;
+    }
+    button{
+      appearance:none; border:0; cursor:pointer;
+      padding:12px 16px; border-radius:14px; font-weight:700;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color:#351b2b;
+      box-shadow: 0 10px 30px rgba(255,199,170,.3);
+      transition: transform .08s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    button:hover{ transform: translateY(-2px); }
+    button:active{ transform: translateY(0); }
+    button.secondary{
+      background: transparent; color: var(--accent);
+      border:1px solid rgba(255,255,255,.25);
+      box-shadow:none;
+    }
+    .status{
+      margin-top: 14px; font-size:14px; color:#d9ccd1;
+    }
+
+    /* Estat canjeat */
+    .redeemed{
+      border-color: rgba(93,211,158,.35);
+      box-shadow: 0 12px 50px rgba(93,211,158,.25);
+    }
+    .redeemed .badge{ background: linear-gradient(90deg, var(--ok), #b9ffd7); color:#123226 }
+    .redeemed h2{ color:#eafff4 }
+    .redeemed .status{ color:#bff2d7 }
+
+    footer{
+      text-align:center; opacity:.7; font-size:12px; padding:24px 12px 40px;
+    }
+
+    /* confeti/cors */
+    canvas#confetti{ position: fixed; inset: 0; pointer-events:none; z-index: 3; }
+
+    /* Pantalla de bloqueig per data */
+    #gate{
+      position: fixed; inset: 0; z-index: 9999;
+      display: none; align-items: center; justify-content: center;
+      background: radial-gradient(1200px 800px at 70% -10%, #3b2b70 0%, #1b1734 45%, #2c2147 100%);
+      color: #fff7f3; text-align: center; padding: 24px;
+    }
+    #gate .gate-card{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 18px;
+      padding: 22px 20px;
+      max-width: 640px; width: min(92vw, 640px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    #gate .gate-badge{
+      display:inline-block; margin-bottom: 8px;
+      padding: 6px 12px; border-radius: 999px;
+      font-weight: 700; letter-spacing:.25px; font-size: 13px;
+      color:#341c2b;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .locked header, .locked main, .locked footer{
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
-  <main class="card">
-    <header class="hero">
-      <div class="hero-badge">🎁 Cupó d'aniversari</div>
-      <h1>Cap de setmana sorpresa</h1>
-      <p class="subtitle">Vàlid per un cap de setmana sorpresa — desconnectar, gaudir i molts petonets ✨</p>
-      <div class="hearts" aria-hidden="true">
-        <span>❤</span><span>❤</span><span>❤</span>
-      </div>
-    </header>
+  <!-- GATE: contingut no disponible fins a 31/10/2025 (Europe/Madrid) -->
+  <div id="gate" aria-live="polite">
+    <div class="gate-card">
+      <div class="gate-badge">⏳ Contingut no disponible</div>
+      <h2>Encara no és el moment…</h2>
+      <p>El cupó es desbloquejarà aviat. Torna a provar-ho a partir de l’1/11/2025.</p>
+      <small>Zona horària: Europa/Madrid</small>
+    </div>
+  </div>
 
-    <section id="voucher-view" class="view">
-      <div class="voucher">
-        <p>Presentant aquest cupó, la persona afortunada podrà gaudir d'un <strong>cap de setmana sorpresa</strong>, amb moments especials i una mica de màgia.</p>
-        <ul class="details">
-          <li>Vàlid per a: <span id="voucher-to">La meva persona preferida</span></li>
-          <li>Codi: <code id="voucher-code">CUPO-2025-23</code></li>
-          <li>Condicions: no transferible, val només per la data acordada.</li>
-        </ul>
+  <div class="stars"></div>
+  <div class="twinkles"></div>
+  <canvas id="confetti"></canvas>
+
+  <header>
+    <h1 class="title">🎁 Cupó Romàntic — Cap de setmana a Àger</h1>
+    <p class="subtitle">Un cap de setmana per desconnectar, descobrir i brindar sota les estrelles ✨</p>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="card">
+      <span class="badge" id="badge">Cupó disponible</span>
+      <h2 id="headline">Cupó vàlid per un cap de setmana sorpresa</h2>
+
+      <div class="meta" id="meta">
+        <span>Destí: <strong>Àger (Montsec)</strong></span>
+        <span>Validesa: <strong>cap de setmana acordat</strong></span>
+        <span>Codi: <strong id="codeText">CUPÓ-ÀGER-XX</strong></span>
       </div>
+
+      <div class="voucher" id="voucher">
+        Aquest cupó dóna dret a un <strong>cap de setmana sorpresa</strong> amb allotjament i experiències seleccionades amb molt d’amor.
+        Presenta aquest cupó (mòbil o paper) per bescanviar-lo. No transferible. Gaudeix cada moment 💛
+        <div class="code" aria-live="polite">Codi: <span id="codeText2">CUPÓ-ÀGER-XX</span></div>
+      </div>
+
       <div class="actions">
-        <button id="redeemBtn" class="btn btn-primary">Canvia el cupó</button>
-        <button id="printBtn" class="btn btn-ghost">Imprimeix</button>
+        <button id="redeemBtn" type="button">Canviar el cupó</button>
+        <button id="copyBtn" class="secondary" type="button">Copiar codi</button>
       </div>
-    </section>
 
-    <section id="redeemed-view" class="view hidden">
-      <div class="redeemed">
-        <h2>🎉 Cupó canjeat!</h2>
-        <p>❤️ Moltes felicitats petita, espero que t'agradi el finde ❤️</p>
-        <p class="note">*Si necessites els detalls, revisa el missatge de confirmació 😉</p>
-        <button id="confettiBtn" class="btn btn-primary">Llança confetti</button>
-        <button id="backBtn" class="btn btn-ghost">Torna al cupó</button>
-      </div>
-      <canvas id="confettiCanvas"></canvas>
+      <div class="status" id="status">Estat: pendent de bescanvi.</div>
     </section>
-
-    <footer class="footer">
-      <small>Fet amb ❤️</small>
-    </footer>
   </main>
 
-  <script src="app.js"></script>
+  <footer>
+    Fet amb 💫 i moltes ganes de viure aventures plegats.
+  </footer>
+
+  <!-- JS: Gate per data (Europe/Madrid) -->
+  <script>
+  (function(){
+    // Bypass per proves: ?unlock=1
+    const usp = new URLSearchParams(location.search);
+    if (usp.get('unlock') === '1') return;
+
+    // Avui a Europa/Madrid en YYYY-MM-DD
+    const todayMadrid = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' });
+    const lockUntil = '2025-10-31'; // inclòs
+
+    if (todayMadrid <= lockUntil) {
+      document.documentElement.classList.add('locked');
+      const gate = document.getElementById('gate');
+      if (gate) gate.style.display = 'flex';
+    }
+  })();
+  </script>
+
+  <script>
+    // --- Config bàsica ---
+    const CODE = new URLSearchParams(location.search).get('code') || "CUPÓ-ÀGER-XX";
+    const STORAGE_KEY = "voucher_ager_redeemed_" + CODE;
+
+    // Pintar codi al DOM
+    document.getElementById('codeText').textContent = CODE;
+    document.getElementById('codeText2').textContent = CODE;
+
+    const card = document.getElementById('card');
+    const badge = document.getElementById('badge');
+    const status = document.getElementById('status');
+    const headline = document.getElementById('headline');
+    const voucher = document.getElementById('voucher');
+    const redeemBtn = document.getElementById('redeemBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    // Estat persistent via localStorage
+    const redeemed = localStorage.getItem(STORAGE_KEY) === "true";
+    if(redeemed) setRedeemedUI();
+
+    redeemBtn.addEventListener('click', () => {
+      const ok = confirm("Vols canviar el cupó ara?");
+      if(!ok) return;
+      localStorage.setItem(STORAGE_KEY, "true");
+      setRedeemedUI();
+      burstConfetti(); // cors 💞
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(CODE);
+        copyBtn.textContent = "Codi copiat ✓";
+        setTimeout(()=> copyBtn.textContent = "Copiar codi", 1400);
+      }catch(e){
+        alert("No s'ha pogut copiar automàticament. Selecciona i copia el codi manualment.");
+      }
+    });
+
+    function setRedeemedUI(){
+      card.classList.add('redeemed');
+      badge.textContent = "Cupó canjeat";
+      headline.textContent = "🎉 Cupó canjeat! Bon cap de setmana!";
+      status.textContent = "Estat: canjeat. Feliç aniversari i moltes estrelles ✨";
+      voucher.innerHTML = "Gràcies per canviar el cupó. Prepara't per un cap de setmana ple de natura, calma i un cel espectacular 🌌<br><br><strong>Detalls pendents:</strong> guarda aquest enllaç. Si recarregues, continuarà marcat com a canjeat al teu dispositiu.";
+      redeemBtn.disabled = true;
+      redeemBtn.style.opacity = .7;
+    }
+
+    // --- Confeti de cors 💞 ---
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let W, H, hearts = [], running = false;
+
+    function resize(){
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize); resize();
+
+    function makeHeart(){
+      const colors = ["#ff9fab","#ffcad4","#ffc0cb","#ffe0e0","#fff5f5","#fdb7b7"];
+      return {
+        x: Math.random()*W,
+        y: -20,
+        size: 6 + Math.random()*10,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        vy: 1.5 + Math.random()*2.5,
+        vx: -1 + Math.random()*2,
+        rot: Math.random()*Math.PI,
+        vr: -0.05 + Math.random()*0.1
+      };
+    }
+
+    function drawHeart(x, y, s, color, rot){
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rot);
+      ctx.scale(s / 10, s / 10);
+      ctx.beginPath();
+      ctx.moveTo(0, -3);
+      ctx.bezierCurveTo(3, -6, 6, -3, 0, 6);
+      ctx.bezierCurveTo(-6, -3, -3, -6, 0, -3);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function burstConfetti(){
+      if(running) return;
+      running = true;
+      hearts = Array.from({length: 160}, makeHeart);
+      let t = 0;
+      function frame(){
+        ctx.clearRect(0,0,W,H);
+        for(const h of hearts){
+          h.x += h.vx;
+          h.y += h.vy;
+          h.rot += h.vr;
+          drawHeart(h.x, h.y, h.size, h.color, h.rot);
+        }
+        hearts = hearts.filter(h => h.y < H+30);
+        t++;
+        if(t < 260){
+          requestAnimationFrame(frame);
+        }else{
+          ctx.clearRect(0,0,W,H);
+          running = false;
+        }
+      }
+      frame();
+    }
+  </script>
 </body>
-  <div id="gate" aria-live="polite">
-  <div class="gate-card">
-    <div class="gate-badge">⏳ Contingut no disponible</div>
-    <h2>Encara no és el moment…</h2>
-    <p>El cupó es desbloquejarà aviat. Torna a provar-ho a partir de l’1/11/2025.</p>
-    <small>Zona horària: Europa/Madrid</small>
-  </div>
-</div>
 </html>
