@@ -186,7 +186,7 @@
     <div class="gate-card">
       <div class="gate-badge">⏳ Contingut no disponible</div>
       <h2>Encara no és el moment…</h2>
-      <p>El cupó es desbloquejarà aviat. Torna a provar-ho a partir de l’1/11/2025.</p>
+      <p>El cupó es desbloquejarà aviat. Torna a provar-ho a partir del 31/10/2025.</p>
       <small>Zona horària: Europa/Madrid</small>
     </div>
   </div>
@@ -239,7 +239,7 @@
 
     // Avui a Europa/Madrid en YYYY-MM-DD
     const todayMadrid = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' });
-    const lockUntil = '2025-10-31'; // inclòs
+    const lockUntil = '2025-10-30'; // inclòs
 
     if (todayMadrid <= lockUntil) {
       document.documentElement.classList.add('locked');
