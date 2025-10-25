@@ -101,3 +101,27 @@ h1{
   .actions, #confettiCanvas{display:none!important}
   .card{box-shadow:none; border:none; margin:0}
 }
+#gate{
+  position: fixed; inset: 0; z-index: 9999;
+  display: none; align-items: center; justify-content: center;
+  background: radial-gradient(1200px 800px at 70% -10%, #3b2b70 0%, #1b1734 45%, #2c2147 100%);
+  color: #fff7f3; text-align: center; padding: 24px;
+}
+#gate .gate-card{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 18px;
+  padding: 22px 20px;
+  max-width: 640px; width: min(92vw, 640px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+#gate .gate-badge{
+  display:inline-block; margin-bottom: 8px;
+  padding: 6px 12px; border-radius: 999px;
+  font-weight: 700; letter-spacing:.25px; font-size: 13px;
+  color:#341c2b;
+  background: linear-gradient(90deg, #f0caca, #ffd7a8);
+}
+.locked header, .locked main, .locked footer{
+  display: none !important; /* oculta tot el contingut mentre està bloquejat */
+}
